@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Bookings | Movie Ticket Booking</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- ✅ jsPDF for PDF Download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+  .glow {
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+</style>
+
+</head>
+
+<body class="bg-black text-white">
+  <div class="min-h-screen flex flex-col items-center p-10">
+   <h1 class="relative text-4xl sm:text-5xl font-extrabold mb-8 flex items-center gap-3 
+           text-blue-400 glow hover:bg-clip-text 
+           hover:bg-gradient-to-r hover:from-blue-400 hover:via-cyan-300 hover:to-purple-400 
+           transition-all duration-500 ease-out transform hover:scale-105 cursor-default select-none">
+
+  <span class="relative group">
+    My Bookings
+    <!-- ✨ Animated underline -->
+    <span class="absolute left-0 -bottom-1 w-0 h-[3px] bg-gradient-to-r from-blue-400 to-purple-500 rounded-full 
+                 group-hover:w-full transition-all duration-500 ease-in-out"></span>
+  </span>
+</h1>
+
+
+    <div id="bookings-container" class="w-full max-w-5xl space-y-6"></div>
+
+    <a href="movies.html"
+       class="mt-10 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg transition">
+      ← Back to Movies
+    </a>
+  </div>
+
+  <script src="mybookings.js"></script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movies | Movie Ticket Booking</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* ✨ Glowing animation for the search button */
+    #search-button {
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+      }
+      50% {
+        box-shadow: 0 0 25px rgba(147, 51, 234, 0.7);
+      }
+    }
+
+    /* Expanding input effect */
+    #search-input:focus {
+      transform: scale(1.02);
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+
+<body class="bg-black text-white">
+
+  <!-- 🌑 Navbar -->
+<!-- 🌑 Navbar -->
+<nav class="bg-black text-white shadow-md px-6 py-3 flex items-center justify-between gap-6">
+  
+  <!-- 🎬 Logo -->
+  <div class="flex items-center space-x-2">
+    <h1 class="flex items-center text-2xl sm:text-3xl font-bold drop-shadow-md">
+      MOVIE TICKET
+      <span
+        class="bg-blue-100 text-blue-800 text-base sm:text-lg font-semibold px-2 py-0.5 rounded-sm ms-2 drop-shadow-sm">
+        BOOKING
+      </span>
+    </h1>
+  </div>
+
+  <!-- 🔍 Search Bar Centered -->
+  <div class="flex-1 w-full flex justify-center ">
+    <div
+      class="relative flex items-center w-full max-w-md bg-gradient-to-r from-gray-800 via-gray-900 to-black rounded-full p-[2px]
+             transition-all duration-500 hover:from-blue-900 hover:via-gray-900 hover:to-purple-900 
+             shadow-[0_0_10px_rgba(59,130,246,0.3)] focus-within:shadow-[0_0_20px_rgba(59,130,246,0.6)]">
+      
+      <div class="flex items-center bg-black rounded-full w-full px-4 py-2">
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Search movies..."
+          class="bg-transparent outline-none text-gray-300 w-full placeholder-gray-500 focus:placeholder-transparent transition duration-300"
+        />
+
+        <!-- ✨ Search Button -->
+        <button id="search-button"
+          class="ml-2 flex items-center justify-center w-10 h-9 rounded-full 
+                 bg-gradient-to-r from-blue-500 to-purple-500 
+                 hover:from-blue-400 hover:to-pink-500 
+                 text-white shadow-md hover:shadow-[0_0_15px_rgba(59,130,246,0.6)] 
+                 transition-all duration-300 transform hover:scale-110 active:scale-95">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke-width="2" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🏠 Home Button Right -->
+  <a href="index.html"
+    class="group flex items-center gap-2 px-5 py-2 rounded-full border border-blue-500 text-blue-400 font-semibold 
+           transition-all duration-300 ease-out hover:bg-blue-600 hover:text-white 
+           hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] active:scale-95">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+         stroke-width="2.2" stroke="currentColor"
+         class="w-5 h-5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-110">
+      <path stroke-linecap="round" stroke-linejoin="round"
+            d="M3 9.75L12 3l9 6.75M4.5 10.5v9.75a.75.75 0 00.75.75H9a.75.75 0 00.75-.75v-4.5h4.5v4.5a.75.75 0 00.75.75h3.75a.75.75 0 00.75-.75V10.5M8.25 21h7.5" />
+    </svg>
+    <span class="tracking-wide group-hover:tracking-wider transition-all duration-300">Home</span>
+  </a>
+</nav>
+
+
+  <!-- 🎥 Featured Movie -->
+  <section id="featured-banner" class="relative w-full h-[80vh] flex items-end bg-gray-900 overflow-hidden">
+    <img id="featured-image" src="" alt="Featured Movie"
+      class="absolute inset-0 w-full h-full object-cover opacity-60" />
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+    <div class="relative z-10 p-10 max-w-3xl">
+      <h2 id="featured-title" class="text-5xl font-extrabold mb-4 drop-shadow-lg"></h2>
+      <p id="featured-overview" class="text-gray-300 text-lg mb-6 line-clamp-3"></p>
+      <button onclick="openBookingModal(window.featuredMovie)"
+        class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-full font-semibold text-lg shadow-lg transition">
+        Book Now
+      </button>
+    </div>
+  </section>
+
+  <!-- 🍿 Movie Rows -->
+  <main class="space-y-10 mt-10 pb-20">
+    <section id="popular" class="px-6">
+      <h2 class="text-3xl font-bold mb-4 text-blue-400">🔥 Popular</h2>
+      <div class="scroll-container flex space-x-4 overflow-x-scroll no-scrollbar"></div>
+    </section>
+    <section id="now-playing" class="px-6">
+      <h2 class="text-3xl font-bold mb-4 text-green-400">🎬 Now Playing</h2>
+      <div class="scroll-container flex space-x-4 overflow-x-scroll no-scrollbar"></div>
+    </section>
+    <section id="top-rated" class="px-6">
+      <h2 class="text-3xl font-bold mb-4 text-yellow-400">⭐ Top Rated</h2>
+      <div class="scroll-container flex space-x-4 overflow-x-scroll no-scrollbar"></div>
+    </section>
+    <section id="upcoming" class="px-6">
+      <h2 class="text-3xl font-bold mb-4 text-pink-400">🚀 Upcoming</h2>
+      <div class="scroll-container flex space-x-4 overflow-x-scroll no-scrollbar"></div>
+    </section>
+  </main>
+
+  <!-- 🎬 Movie Detail Modal -->
+  <section id="movie-detail"
+    class="hidden fixed inset-0 z-50 bg-black text-white flex flex-col justify-center items-center overflow-y-auto transition-all duration-700">
+    <img id="detail-backdrop" src="" alt="Movie Backdrop"
+      class="absolute inset-0 w-full h-full object-cover opacity-40 blur-sm transition-all duration-700" />
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+    <div class="relative z-10 flex flex-col md:flex-row items-center justify-between w-full max-w-7xl px-10 py-16 space-y-10 md:space-y-0 md:space-x-10">
+      <div class="max-w-2xl text-left">
+        <h2 id="detail-title" class="text-5xl md:text-6xl font-extrabold drop-shadow-lg mb-4"></h2>
+        <p id="detail-rating" class="text-yellow-400 font-semibold text-lg mb-4"></p>
+        <p id="detail-overview" class="text-gray-200 leading-relaxed text-base md:text-lg"></p>
+        <div class="flex flex-wrap gap-4 mt-8">
+          <button id="close-detail"
+            class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-full font-semibold shadow-lg transition">
+            Close
+          </button>
+          <button onclick="openBookingModal(window.selectedMovie)"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-semibold shadow-lg transition">
+            Book Now
+          </button>
+        </div>
+      </div>
+      <div class="hidden md:block">
+        <img id="detail-poster" src="" alt="Movie Poster"
+          class="w-[350px] rounded-xl shadow-2xl transition-transform duration-500 hover:scale-105" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 🎟️ Booking Modal -->
+  <div id="booking-modal"
+    class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex justify-center items-center">
+    <div class="bg-gray-900 p-8 rounded-2xl w-[420px] relative shadow-2xl border border-gray-700">
+      <button id="close-booking"
+        class="absolute top-3 right-3 text-gray-400 hover:text-red-400 text-xl">✖</button>
+
+      <h2 id="booking-title" class="text-2xl font-bold text-blue-400 mb-4 text-center"></h2>
+
+      <label class="block mb-2 text-sm text-gray-400">Select Theatre</label>
+      <select id="theatre-select"
+        class="w-full bg-gray-800 p-2 rounded mb-4 border border-gray-700 text-gray-200"></select>
+
+      <label class="block mb-2 text-sm text-gray-400">Select Show Time</label>
+      <select id="show-select"
+        class="w-full bg-gray-800 p-2 rounded mb-4 border border-gray-700 text-gray-200"></select>
+
+      <label class="block mb-2 text-sm text-gray-400">Select Seats</label>
+      <div id="seat-grid"
+        class="grid grid-cols-5 gap-2 mb-4 bg-gray-800 p-3 rounded-lg border border-gray-700"></div>
+
+      <button id="confirm-booking"
+        class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-semibold transition">
+        Confirm Booking
+      </button>
+    </div>
+  </div>
+
+  <script src="movies.js"></script>
+
+  <script>
+    // 🎯 Search Functionality for movies.html
+    const searchInput = document.getElementById("search-input");
+    const searchButton = document.getElementById("search-button");
+
+    function redirectToSearch() {
+      const query = searchInput.value.trim();
+      if (query) {
+        window.location.href = `search.html?query=${encodeURIComponent(query)}`;
+      }
+    }
+
+    if (searchButton) searchButton.addEventListener("click", redirectToSearch);
+    if (searchInput)
+      searchInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") redirectToSearch();
+      });
+  </script>
+
+</body>
+</html>

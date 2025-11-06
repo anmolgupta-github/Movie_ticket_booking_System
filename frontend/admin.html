@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard | Movie Ticket</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white min-h-screen">
+  <!-- Topbar -->
+  <nav class="bg-gray-900 border-b border-gray-800 px-6 py-3 flex items-center justify-between sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-lg bg-blue-600 grid place-items-center font-extrabold">A</div>
+      <div>
+        <h1 class="text-xl font-bold leading-4">Admin Dashboard</h1>
+        <p class="text-xs text-gray-400">Movie Ticket Booking</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="index.html" class="px-3 py-1.5 rounded-lg border border-blue-500 text-blue-400 hover:bg-blue-600 hover:text-white transition">
+        Home
+      </a>
+      <button id="logoutAdmin" class="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700">Logout</button>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <main class="max-w-7xl mx-auto p-6 space-y-6">
+
+    <!-- Stats -->
+    <section id="stats" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <p class="text-gray-400 text-sm">Users</p>
+        <h3 id="stat-users" class="text-3xl font-extrabold mt-1">—</h3>
+      </div>
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <p class="text-gray-400 text-sm">Theatres</p>
+        <h3 id="stat-theatres" class="text-3xl font-extrabold mt-1">—</h3>
+      </div>
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <p class="text-gray-400 text-sm">Shows</p>
+        <h3 id="stat-shows" class="text-3xl font-extrabold mt-1">—</h3>
+      </div>
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <p class="text-gray-400 text-sm">Bookings</p>
+        <h3 id="stat-bookings" class="text-3xl font-extrabold mt-1">—</h3>
+      </div>
+    </section>
+
+    <!-- Tabs -->
+    <div class="flex gap-2 flex-wrap">
+      <button data-tab="theatres" class="tab-btn px-4 py-2 rounded-lg bg-blue-600">Theatres</button>
+      <button data-tab="shows" class="tab-btn px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700">Shows</button>
+      <button data-tab="movies" class="tab-btn px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700">Movies</button>
+      <button data-tab="bookings" class="tab-btn px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700">Bookings</button>
+      <button data-tab="users" class="tab-btn px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700">Users</button>
+    </div>
+
+    <!-- THEATRES -->
+    <section id="panel-theatres" class="panel space-y-4">
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <h3 class="text-lg font-bold mb-3">Add / Edit Theatre</h3>
+        <form id="theatre-form" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <input type="hidden" id="theatre_id"/>
+          <input id="theatre_name" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2" placeholder="Name" />
+          <input id="theatre_city" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2" placeholder="City" />
+          <input id="theatre_address" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2" placeholder="Address" />
+          <div class="flex gap-2">
+            <button type="submit" class="bg-green-600 hover:bg-green-700 rounded-lg px-4">Save</button>
+            <button type="button" id="theatre-reset" class="bg-gray-700 hover:bg-gray-600 rounded-lg px-4">Reset</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <div class="flex justify-between items-center mb-3">
+          <h3 class="text-lg font-bold">All Theatres</h3>
+          <input id="theatre-search" placeholder="Search by name/city" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 w-64"/>
+        </div>
+        <div id="theatre-list" class="divide-y divide-gray-800"></div>
+      </div>
+    </section>
+
+    <!-- SHOWS -->
+    <section id="panel-shows" class="panel hidden space-y-4">
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <h3 class="text-lg font-bold mb-3">Create Show</h3>
+        <form id="show-form" class="grid sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <input id="show_theatre_id" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2" placeholder="Theatre ID"/>
+          <input id="show_tmdb_id" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2" placeholder="TMDB ID"/>
+          <input id="show_time" type="datetime-local" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2"/>
+          <input id="show_price" type="number" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2" placeholder="Price"/>
+          <button class="bg-green-600 hover:bg-green-700 rounded-lg px-4">Save</button>
+        </form>
+      </div>
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <h3 class="text-lg font-bold mb-3">Shows</h3>
+        <div id="show-list" class="divide-y divide-gray-800"></div>
+      </div>
+    </section>
+
+    <!-- MOVIES -->
+    <section id="panel-movies" class="panel hidden space-y-4">
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <h3 class="text-lg font-bold mb-3">Add Movie (Local Mapping)</h3>
+        <form id="movie-form" class="grid sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <input id="movie_tmdb_id" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2" placeholder="TMDB ID"/>
+          <input id="movie_title" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2" placeholder="Title"/>
+          <input id="movie_poster" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2" placeholder="Poster Path (/abc.jpg)"/>
+          <button class="bg-green-600 hover:bg-green-700 rounded-lg px-4">Save</button>
+        </form>
+      </div>
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <h3 class="text-lg font-bold mb-3">Movies</h3>
+        <div id="movie-list" class="divide-y divide-gray-800"></div>
+      </div>
+    </section>
+
+    <!-- BOOKINGS -->
+    <section id="panel-bookings" class="panel hidden space-y-4">
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <h3 class="text-lg font-bold mb-3">Bookings</h3>
+        <div id="booking-list" class="divide-y divide-gray-800"></div>
+      </div>
+    </section>
+
+    <!-- USERS -->
+    <section id="panel-users" class="panel hidden space-y-4">
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-4">
+        <h3 class="text-lg font-bold mb-3">Users</h3>
+        <div id="user-list" class="divide-y divide-gray-800"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast -->
+  <div id="admin-toast" class="hidden fixed bottom-6 right-6 bg-gray-900 border border-gray-700 text-white px-4 py-2 rounded-lg"></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | Movie Booking</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
+  <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-96">
+    <h2 class="text-2xl font-bold mb-4 text-center text-blue-400">Register</h2>
+
+    <input id="name" type="text" placeholder="Full Name" class="w-full mb-3 px-3 py-2 rounded bg-gray-700 outline-none focus:ring-2 focus:ring-blue-500" />
+    <input id="email" type="email" placeholder="Email" class="w-full mb-3 px-3 py-2 rounded bg-gray-700 outline-none focus:ring-2 focus:ring-blue-500" />
+    <input id="password" type="password" placeholder="Password" class="w-full mb-4 px-3 py-2 rounded bg-gray-700 outline-none focus:ring-2 focus:ring-blue-500" />
+
+    <!-- 🧠 Message Display Area -->
+    <p id="registerMessage" class="text-center text-sm font-semibold h-5 mb-3"></p>
+
+    <button id="registerBtn" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold transition-all">
+      Register
+    </button>
+
+    <p class="text-sm mt-3 text-center text-gray-400">
+      Already have an account?
+      <a href="login.html" class="text-blue-400 hover:underline">Login</a>
+    </p>
+  </div>
+
+  <script>
+    document.getElementById("registerBtn").addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const messageEl = document.getElementById("registerMessage");
+
+      // Reset message
+      messageEl.textContent = "";
+      messageEl.className = "text-center text-sm font-semibold h-5 mb-3";
+
+      // ✅ Validate fields
+      if (!name || !email || !password) {
+        messageEl.textContent = "⚠️ Please fill in all fields.";
+        messageEl.classList.add("text-yellow-400");
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:3000/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          messageEl.textContent = data.message || "❌ Registration failed.";
+          messageEl.classList.add("text-red-400");
+          return;
+        }
+
+        // ✅ Success Message
+        messageEl.textContent = "✅ Registration successful! Redirecting...";
+        messageEl.classList.add("text-green-400");
+
+        // Redirect smoothly after short delay
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 1000);
+      } catch (err) {
+        console.error("❌ Error registering user:", err);
+        messageEl.textContent = "⚠️ Server error. Please try again later.";
+        messageEl.classList.add("text-red-400");
+      }
+    });
+  </script>
+</body>
+</html>
